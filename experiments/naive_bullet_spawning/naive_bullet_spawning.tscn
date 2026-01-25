@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cavg78d66hva0"]
+
+[ext_resource type="Script" uid="uid://bglaiuoee1tky" path="res://experiments/naive_bullet_spawning/naive_bullet_spawning.gd" id="1_esfxi"]
+
+[node name="NaiveBulletSpawning" type="Node2D"]
+script = ExtResource("1_esfxi")

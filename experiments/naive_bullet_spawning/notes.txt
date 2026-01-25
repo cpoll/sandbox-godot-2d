@@ -1,0 +1,2 @@
+Optimizations for naive approach:
+    - Bullet Area2d has no collision mask. The ship can check for all the collision
