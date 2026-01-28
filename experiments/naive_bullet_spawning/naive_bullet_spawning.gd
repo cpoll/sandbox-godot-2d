@@ -6,11 +6,13 @@ const ROWS: int = 50
 const BULLET_FREQUENCY = 0.2
 
 var timer = 0
+var screen_size
 var row_width
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
     # We'll calculate row width as if there's one extra row so that we can shift the rows a half-step to the right
+    screen_size = get_viewport().size
     row_width = get_viewport().size.x / (ROWS + 1)
 
 
@@ -24,6 +26,7 @@ func _process(delta: float) -> void:
 func spawn_bullets() -> void:
     for row in range(ROWS):
         var b = bullet.instantiate()
+        b.set_bounds(Vector2(screen_size.x - 50, screen_size.y - 50))
         add_child(b)
         b.position.x = row * row_width + row_width
         

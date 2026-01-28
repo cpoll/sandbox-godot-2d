@@ -1,6 +1,23 @@
-[gd_scene load_steps=2 format=3 uid="uid://cavg78d66hva0"]
+[gd_scene load_steps=5 format=3 uid="uid://cavg78d66hva0"]
 
 [ext_resource type="Script" uid="uid://bglaiuoee1tky" path="res://experiments/naive_bullet_spawning/naive_bullet_spawning.gd" id="1_esfxi"]
+[ext_resource type="Texture2D" uid="uid://cxfhcau2lj8ps" path="res://icon.svg" id="2_esfxi"]
+[ext_resource type="Script" uid="uid://dge72nnil0ybe" path="res://experiments/naive_bullet_spawning/player.gd" id="3_d0r3a"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d0r3a"]
+size = Vector2(160, 140)
 
 [node name="NaiveBulletSpawning" type="Node2D"]
 script = ExtResource("1_esfxi")
+
+[node name="Player" type="Sprite2D" parent="."]
+position = Vector2(568, 521)
+texture = ExtResource("2_esfxi")
+script = ExtResource("3_d0r3a")
+
+[node name="Area2D" type="Area2D" parent="Player"]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Area2D"]
+position = Vector2(0, -10)
+shape = SubResource("RectangleShape2D_d0r3a")
