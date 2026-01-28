@@ -1,7 +1,24 @@
-Optimizations for naive approach:
+# Optimizations for naive approach
     - Bullet Area2d has no collision mask. The ship can check for all the collision
 
 
+# Testing
+Test methodology:
+    1. Open up and pin the Debugger -> Profiler and click Autostart
+    2. Run the game until the bullets hit the bottom and start despawning
+    3. Observe the Frame Time
 
-TODO:
-    - Profile and record
+Rows | Spawn Rate | Frame Time
+---
+50 | 0.1 | 15-17
+25 | 0.1 | 4-7
+
+# Remarks
+Seems obvious enough that we're close to dropping frames, and the naive approach
+isn't good enough. Still, 50 rows spawning every 0.1 seconds is a lot of bullets,
+more than I think you see in a danmaku (I should add a bullet count).
+But even 4ms seems like a long time for this.
+
+# TODO
+    - Add a bullet count
+    - Try out https://godotengine.org/asset-library/asset/1902

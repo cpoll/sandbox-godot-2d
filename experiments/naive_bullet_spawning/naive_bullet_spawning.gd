@@ -2,8 +2,8 @@ extends Node2D
 
 var bullet = load("res://experiments/naive_bullet_spawning/bullet.tscn")
 
-const ROWS: int = 50
-const BULLET_FREQUENCY = 0.2
+const ROWS: int = 25
+const BULLET_FREQUENCY = 0.1
 
 var timer = 0
 var screen_size
