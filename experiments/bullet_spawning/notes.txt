@@ -1,0 +1,51 @@
+# Optimizations for naive approach
+    - Bullet Area2d has no collision mask. The ship can check for all the collision
+
+
+# Testing
+Test methodology:
+    1. Open up and pin the Debugger -> Profiler and click Autostart
+    2. Run the game until the bullets hit the bottom and start despawning
+    3. Observe the Frame Time after 30s.
+
+
+Tests are done with 50 bullet rows and a spawn rate of 0.1seconds unless specified.
+
+Number | Conditions | Frame Time (ms)
+---
+1 | Naive | 16-24
+2 | Naive w/ collision layers | 15-17
+3 | Above, with 25 bullet rows | 4-7
+4 | queue_free disabled | constantly increasing
+5 | pooling | 10-13ms
+
+
+# Test Notes
+
+Test 2/3: Seems obvious enough that we're close to dropping frames, and the naive approach
+isn't good enough. Still, 50 rows spawning every 0.1 seconds is a lot of bullets,
+more than I think you see in a danmaku (I should add a bullet count).
+But even 4ms seems like a long time for this.
+
+Test 4: Commented out queue_free(). The flame graph shows a lot of time spent on 'Cull CanvasItem Tree'. I think that's
+deciding which elements don't need to be rendered (should be culled). I think this increases linearly
+with number of elements in the scene. Commenting out queue_free() suggests as much, as it increases
+linearly (or some low order exponential) with time running. Does multimesh bypass this?
+
+Test 5: Added pooling. Lower time, but I wonder if that's just an artifact. It also makes the bullets a bit
+janky; I might not be properly resetting them.
+I now see the Visual Profiler isn't
+what I want. The regular profiler has further breakdowns. Physics2D: 3ms, Script functions (Bullet._process): 3.76ms.
+Question: how do you break down the Profiler "Process Time" into individual steps?
+
+
+
+
+# TODO
+    - how do you break down the Profiler "Process Time"?
+    - better pooling (I'm sure there's a guide somewhere for the rightTM way to do it)
+    - multimesh
+    - Add a bullet count
+    - Try out https://godotengine.org/asset-library/asset/1902
+    
+    - ~pooling~

@@ -3,6 +3,7 @@ class_name Bullet
 
 const SPEED = 100
 var bounds
+var despawn_callback: Callable
 
 func _ready() -> void:
     pass # Replace with function body.
@@ -16,5 +17,5 @@ func _process(delta: float) -> void:
         explode()
 
 func explode() -> void:
-    print("self destructing")
-    queue_free()
+    # queue_free()
+    despawn_callback.call(self)
