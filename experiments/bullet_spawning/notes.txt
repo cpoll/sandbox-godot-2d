@@ -21,6 +21,7 @@ Number | Conditions | Frame Time (ms)
 6 | collision disabled | 10-13
 7 | area2d deleted | 5
 8 | area2d not monitoring | 10-13
+9 | spawner moves bullets | 10-13
 
 # Test Notes
 
@@ -46,7 +47,8 @@ Physics2D is otherwise 3ms of Integrate Forces. This seems like a strange thing,
 Test 8: Disable Bullet's Area2D.Monitoring. Seems to do nothing, probably identical to turning off all Collision masks.
 
 Test 9: Remove the script from each bullet. Instead, the bullet spawner moves and disables the bullets. This should remove the 3.76ms of Bullet._process, and hopefully
-not just move it to bullet_spawning._process (In progress)
+not just move it to bullet_spawning._process. This should also remove Physics2D. We'll have to reimplement collisions later.
+Actual result: Script's up to 5ms, mostly move_bullets. despawn_bullet is sometimes 3ms as well, so Array.erase() isn't the best.
 
 # TODO
     - how do you break down the Profiler "Process Time"?

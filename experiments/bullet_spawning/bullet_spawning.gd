@@ -5,12 +5,15 @@ var bullet = load("res://experiments/bullet_spawning/bullet.tscn")
 
 const ROWS: int = 50
 const BULLET_FREQUENCY = 0.1
+const BULLET_SPEED = 100
 
 var timer = 0
 var screen_size
 var row_width
+var bounds: Vector2
 
 var pool
+var bullets
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -18,17 +21,23 @@ func _ready() -> void:
     screen_size = get_viewport().size
     row_width = get_viewport().size.x / (ROWS + 1)
     pool = []
+    bullets = []
+    bounds = Vector2(screen_size.x - 50, screen_size.y - 50)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+    move_bullets(delta)
+    
+    # Spawn bullets
     timer -= delta
     if timer < 0:
         spawn_bullets()
         timer+= BULLET_FREQUENCY
 
+
 func spawn_bullets() -> void:
     for row in range(ROWS):
-        spawn_bullet(Vector2(screen_size.x - 50, screen_size.y - 50), Vector2(row * row_width + row_width, 0))
+        spawn_bullet(bounds, Vector2(row * row_width + row_width, 0))
         
 func spawn_bullet(bounds: Vector2, pos: Vector2) -> void:
     var b = pool.pop_back()
@@ -36,13 +45,14 @@ func spawn_bullet(bounds: Vector2, pos: Vector2) -> void:
         b = bullet.instantiate()
         add_child(b)
         b.despawn_callback = despawn_bullet
-        b.set_bounds(bounds)
+        # b.set_bounds(bounds)
     else:
         b.process_mode = 0
         b.show()
         print("depooled bullet")
         
     b.position = pos
+    bullets.append(b)
     
         
 func despawn_bullet(b: Bullet):
@@ -51,4 +61,10 @@ func despawn_bullet(b: Bullet):
     b.process_mode = 4
     b.hide()
     pool.append(b)
+    bullets.erase(b) # probably not very performant
     
+func move_bullets(delta: float):
+    for b in bullets:
+        b.position.y += delta * BULLET_SPEED
+        if b.position.x > bounds.x or b.position.y > bounds.y:
+            despawn_bullet(b)
