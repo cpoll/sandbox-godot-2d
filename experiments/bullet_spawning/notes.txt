@@ -18,7 +18,9 @@ Number | Conditions | Frame Time (ms)
 3 | Above, with 25 bullet rows | 4-7
 4 | queue_free disabled | constantly increasing
 5 | pooling | 10-13ms
-
+6 | collision disabled | 10-13
+7 | area2d deleted | 5
+8 | area2d not monitoring | 10-13
 
 # Test Notes
 
@@ -38,8 +40,13 @@ I now see the Visual Profiler isn't
 what I want. The regular profiler has further breakdowns. Physics2D: 3ms, Script functions (Bullet._process): 3.76ms.
 Question: how do you break down the Profiler "Process Time" into individual steps?
 
+Test 6/7: Turning off the bullet's layer does a bit, but deleting the Area2Ds and CollisionShape2Ds completely eliminates the Physics2D profiler entry.
+Physics2D is otherwise 3ms of Integrate Forces. This seems like a strange thing, I thought integrate forces was for movement. I suppose Area2D has some extra crap.
 
+Test 8: Disable Bullet's Area2D.Monitoring. Seems to do nothing, probably identical to turning off all Collision masks.
 
+Test 9: Remove the script from each bullet. Instead, the bullet spawner moves and disables the bullets. This should remove the 3.76ms of Bullet._process, and hopefully
+not just move it to bullet_spawning._process (In progress)
 
 # TODO
     - how do you break down the Profiler "Process Time"?

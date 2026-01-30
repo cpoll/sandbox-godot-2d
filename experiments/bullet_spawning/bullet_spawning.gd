@@ -1,4 +1,5 @@
 extends Node2D
+class_name BulletManager
 
 var bullet = load("res://experiments/bullet_spawning/bullet.tscn")
 
