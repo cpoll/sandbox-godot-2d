@@ -15,7 +15,7 @@ script = ExtResource("1_o6i6w")
 unique_name_in_owner = true
 
 [node name="Player" type="Sprite2D" parent="."]
-position = Vector2(568, 521)
+position = Vector2(570, 523)
 texture = ExtResource("2_hqafc")
 script = ExtResource("3_ru858")
 

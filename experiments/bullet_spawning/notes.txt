@@ -50,6 +50,9 @@ Test 9: Remove the script from each bullet. Instead, the bullet spawner moves an
 not just move it to bullet_spawning._process. This should also remove Physics2D. We'll have to reimplement collisions later.
 Actual result: Script's up to 5ms, mostly move_bullets. despawn_bullet is sometimes 3ms as well, so Array.erase() isn't the best.
 
+Test 10: Played with the bullet counts. We're at 2800 for the above experiments. When we hit 5000~ we get exponentially slower, move() goes up to 80ms. I wonder why.
+It doesn't look like the slowdown is in despawn_bullet(), it's all a move() problem...
+
 # TODO
     - how do you break down the Profiler "Process Time"?
     - better pooling (I'm sure there's a guide somewhere for the rightTM way to do it)
