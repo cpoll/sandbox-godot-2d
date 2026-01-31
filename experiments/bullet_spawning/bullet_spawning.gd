@@ -2,6 +2,8 @@ extends Node2D
 class_name BulletManager
 
 var bullet = load("res://experiments/bullet_spawning/bullet.tscn")
+@onready var bulletcount: Label = $'%Ui/%BulletCount'
+@onready var bullet_container = $'%Bullets'
 
 const ROWS: int = 50
 const BULLET_FREQUENCY = 0.1
@@ -24,16 +26,18 @@ func _ready() -> void:
     bullets = []
     bounds = Vector2(screen_size.x - 50, screen_size.y - 50)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-    move_bullets(delta)
+    bulletcount.text = "Bullets %s" % len(bullets)
+    pass
+
+func _physics_process(delta: float) -> void:
+    move_bullets(delta) # TODO: Should be in physics_process
     
     # Spawn bullets
     timer -= delta
     if timer < 0:
         spawn_bullets()
         timer+= BULLET_FREQUENCY
-
 
 func spawn_bullets() -> void:
     for row in range(ROWS):
@@ -43,7 +47,7 @@ func spawn_bullet(bounds: Vector2, pos: Vector2) -> void:
     var b = pool.pop_back()
     if not b:
         b = bullet.instantiate()
-        add_child(b)
+        bullet_container.add_child(b)
         b.despawn_callback = despawn_bullet
         # b.set_bounds(bounds)
     else:

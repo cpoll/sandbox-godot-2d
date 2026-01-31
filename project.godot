@@ -14,6 +14,10 @@ config/name="Sandbox Godot 2D"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
+[display]
+
+window/stretch/mode="viewport"
+
 [layer_names]
 
 2d_physics/layer_1="player"
