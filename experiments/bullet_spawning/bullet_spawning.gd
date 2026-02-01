@@ -2,6 +2,7 @@ extends Node2D
 class_name BulletManager
 
 var bullet = load("res://experiments/bullet_spawning/bullet.tscn")
+# var bullet = load("res://experiments/bullet_spawning/dumb_bullet.tscn")
 @onready var bulletcount: Label = $'%Ui/%BulletCount'
 @onready var bullet_container = $'%Bullets'
 
@@ -31,6 +32,12 @@ func _process(delta: float) -> void:
     pass
 
 func _physics_process(delta: float) -> void:
+    move_bullets_1(delta)
+    move_bullets_2(delta)
+    move_bullets_3(delta)
+    move_bullets_3(delta)
+    move_bullets_3(delta)
+    move_bullets_3(delta)
     move_bullets(delta) # TODO: Should be in physics_process
     
     # Spawn bullets
@@ -48,10 +55,13 @@ func spawn_bullet(bounds: Vector2, pos: Vector2) -> void:
     if not b:
         b = bullet.instantiate()
         bullet_container.add_child(b)
-        b.despawn_callback = despawn_bullet
-        # b.set_bounds(bounds)
+        
+        if b is Bullet:
+            b.despawn_callback = despawn_bullet
+            # b.set_bounds(bounds)
     else:
-        b.process_mode = 0
+        if b is Bullet:
+            b.process_mode = 0
         b.show()
         print("depooled bullet")
         
@@ -62,13 +72,34 @@ func spawn_bullet(bounds: Vector2, pos: Vector2) -> void:
 func despawn_bullet(b: Bullet):
     '''This function is passed to bullets when the pool instantiates them. Bullets will use this
     as a callback when they're ready to re-enter the pool'''
+    
     b.process_mode = 4
     b.hide()
     pool.append(b)
     bullets.erase(b) # probably not very performant
     
+func despawn_dumb_bullet(b: Node2D):
+    b.hide()
+    pool.append(b)
+    bullets.erase(b) # probably not very performant
+    
+func move_bullets_1(delta: float):
+    for b in bullets:
+        b.position.y += delta * BULLET_SPEED/4
+    
+func move_bullets_2(delta: float):
+    for b in bullets:
+        b.position.y += delta * BULLET_SPEED/4
+        
+func move_bullets_3(delta: float):
+    for b in bullets:
+        b.position.y += delta * BULLET_SPEED/16
+    
 func move_bullets(delta: float):
     for b in bullets:
-        b.position.y += delta * BULLET_SPEED
+        b.position.y += delta * BULLET_SPEED/4
         if b.position.x > bounds.x or b.position.y > bounds.y:
-            despawn_bullet(b)
+            if b is Bullet:
+                despawn_bullet(b)
+            else:
+                despawn_dumb_bullet(b)

@@ -5,8 +5,8 @@
 [ext_resource type="Script" uid="uid://dge72nnil0ybe" path="res://experiments/bullet_spawning/player.gd" id="3_ru858"]
 [ext_resource type="PackedScene" uid="uid://b2jwou5n2nuqg" path="res://experiments/bullet_spawning/ui.tscn" id="4_hqafc"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_d0r3a"]
-size = Vector2(160, 140)
+[sub_resource type="CircleShape2D" id="CircleShape2D_hqafc"]
+radius = 96.0052
 
 [node name="BulletSpawning" type="Node2D"]
 script = ExtResource("1_o6i6w")
@@ -15,7 +15,7 @@ script = ExtResource("1_o6i6w")
 unique_name_in_owner = true
 
 [node name="Player" type="Sprite2D" parent="."]
-position = Vector2(570, 523)
+position = Vector2(559, 570)
 texture = ExtResource("2_hqafc")
 script = ExtResource("3_ru858")
 
@@ -23,12 +23,11 @@ script = ExtResource("3_ru858")
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Area2D"]
-position = Vector2(0, -10)
-shape = SubResource("RectangleShape2D_d0r3a")
+shape = SubResource("CircleShape2D_hqafc")
 
 [node name="Ui" parent="." instance=ExtResource("4_hqafc")]
 unique_name_in_owner = true
-offset_left = 513.0
-offset_top = 560.0
-offset_right = 513.0
-offset_bottom = 560.0
+offset_left = 502.0
+offset_top = 607.0
+offset_right = 502.0
+offset_bottom = 607.0

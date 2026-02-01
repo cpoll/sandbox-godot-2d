@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://cxfhcau2lj8ps" path="res://icon.svg" id="1_v7oki"]
 [ext_resource type="Script" uid="uid://bvibvnt337k1s" path="res://experiments/bullet_spawning/bullet.gd" id="2_mr5bs"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ih03y"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_8gu2j"]
 
 [node name="Bullet" type="Sprite2D"]
 scale = Vector2(0.254, 0.25)
@@ -17,4 +17,4 @@ monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 scale = Vector2(5, 5)
-shape = SubResource("RectangleShape2D_ih03y")
+shape = SubResource("CircleShape2D_8gu2j")

@@ -22,6 +22,11 @@ Number | Conditions | Frame Time (ms)
 7 | area2d deleted | 5
 8 | area2d not monitoring | 10-13
 9 | spawner moves bullets | 10-13
+10 | 0.05 bullet frequency | 177
+11 | dumb bullet | 12
+12 | dumb bullet with area2d | 140
+13 | circle collider | 177
+14 | multiple moves | 140
 
 # Test Notes
 
@@ -52,6 +57,25 @@ Actual result: Script's up to 5ms, mostly move_bullets. despawn_bullet is someti
 
 Test 10: Played with the bullet counts. We're at 2800 for the above experiments. When we hit 5000~ we get exponentially slower, move() goes up to 80ms. I wonder why.
 It doesn't look like the slowdown is in despawn_bullet(), it's all a move() problem...
+
+Test 11: Switch to dumb bullet (no script, no area2d). Seems to work. Which is interesting, why is moving so much more expensive. Is it because it has to move its children
+with it, and do some Area2D stuff?
+
+Test 12: Add a useless Area2D to the dumb bullet. It's back to being slow. That seems to be the problem, not just moving the object. So it's a bit deceptive that the problem
+was in move_bullets. I guess it recalculates the collision immediately when you change position?
+
+Test 13: Back to regular bullet, try a circle collider (bullet and player). Doesn't help.
+
+Test 14: Does changing position multiple times also incur performance issues? Bring the spawn rate back to 0.1, but change position twice.
+Result: Yup. Check out move_bullets_3.
+Insight: The more you move your collision boxes around, the worst it is. But really, the insight is to roll your own collision.
+
+Architecture time: The question is, do we need to support weird bullets? Should a bullet track its own place in space? I think performance-wise it should be about the same
+whether the bullet manager holds all the functions, or calls into the Sprites' scripts? If we do the latter, we can have the bullets track their own position and 
+report on which screen quadrant they're in. Then you can override that logic for weird elongated or large bullets. But alternatively, maybe we don't need fancy bullets, and we should
+treat every bullet as a point (or a ray).
+
+Test 15: Dumb bullets and dumb collision. Loop through every bullet and check its distance to the player (but use DistanceSquaredTo).
 
 # TODO
     - how do you break down the Profiler "Process Time"?
