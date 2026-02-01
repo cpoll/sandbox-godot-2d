@@ -28,6 +28,7 @@ Number | Conditions | Frame Time (ms)
 13 | circle collider | 177
 14 | multiple moves | 140
 15 | dumb hand-rolled collision | 10
+16 | distance_to instead of distance_to_squared | 10
 
 # Test Notes
 
@@ -79,8 +80,11 @@ treat every bullet as a point (or a ray).
 Incidentally: After removing all the move functions but forgetting the last one at 1/4 speed: It looks like we can get to about 10k dumb bullets before we hit performance issues.
 Which reminds me, I should make a framerate label.
 
-Test 15: Dumb bullets and dumb collision. Loop through every bullet and check its distance to the player (but use DistanceSquaredTo).
+Test 15: Dumb bullets and dumb collision. Loop through every bullet and check its distance to the player (but use DistanceSquaredTo). We're also bringing it back down to 2800 bullets.
 Result: 10ms, and only 0.74ms is test_collision(). So doing spatial partitioning, quadtrees, etc. isn't strictly necessary.
+
+Test 16: Out of curiosity, how much worse is distance_to than distance_squared_to?
+Result: About the same. Perhaps not surprising. test_collision is a bit worse, 0.8-0.9ms instead of 0.7ms
 
 # TODO
     - how do you break down the Profiler "Process Time"?

@@ -94,9 +94,11 @@ func test_collision():
     var player_radius_pixels = 100
     
     # Optimization: distance_squared_to is cheaper because we don't need to sqrt (an expensive computation)
-    # TODO: Profile this, how much worse is regular distance_to?
-    var collision_distance_squared = (bullet_radius_pixels + player_radius_pixels) ** 2
+    var collision_distance = bullet_radius_pixels + player_radius_pixels
+    var collision_distance_squared = collision_distance ** 2
+
     var player_position: Vector2 = player.position
     for b in bullets:
-        if player_position.distance_squared_to(b.position) < collision_distance_squared:
+        if player_position.distance_to(b.position) < collision_distance:
+        # if player_position.distance_squared_to(b.position) < collision_distance_squared:
             despawn_dumb_bullet(b)
