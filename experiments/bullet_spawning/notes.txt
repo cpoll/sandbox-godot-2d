@@ -75,6 +75,9 @@ whether the bullet manager holds all the functions, or calls into the Sprites' s
 report on which screen quadrant they're in. Then you can override that logic for weird elongated or large bullets. But alternatively, maybe we don't need fancy bullets, and we should
 treat every bullet as a point (or a ray).
 
+Incidentally: After removing all the move functions but forgetting the last one at 1/4 speed: It looks like we can get to about 10k dumb bullets before we hit performance issues.
+Which reminds me, I should make a framerate label.
+
 Test 15: Dumb bullets and dumb collision. Loop through every bullet and check its distance to the player (but use DistanceSquaredTo).
 
 # TODO

@@ -28,6 +28,6 @@ shape = SubResource("CircleShape2D_hqafc")
 [node name="Ui" parent="." instance=ExtResource("4_hqafc")]
 unique_name_in_owner = true
 offset_left = 502.0
-offset_top = 607.0
+offset_top = 513.0
 offset_right = 502.0
-offset_bottom = 607.0
+offset_bottom = 513.0

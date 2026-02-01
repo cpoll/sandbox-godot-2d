@@ -1,8 +1,8 @@
 extends Node2D
 class_name BulletManager
 
-var bullet = load("res://experiments/bullet_spawning/bullet.tscn")
-# var bullet = load("res://experiments/bullet_spawning/dumb_bullet.tscn")
+# var bullet = load("res://experiments/bullet_spawning/bullet.tscn")
+var bullet = load("res://experiments/bullet_spawning/dumb_bullet.tscn")
 @onready var bulletcount: Label = $'%Ui/%BulletCount'
 @onready var bullet_container = $'%Bullets'
 
@@ -28,17 +28,11 @@ func _ready() -> void:
     bounds = Vector2(screen_size.x - 50, screen_size.y - 50)
 
 func _process(delta: float) -> void:
-    bulletcount.text = "Bullets %s" % len(bullets)
+    bulletcount.text = "Bullets: %s\nFPS: %s" % [len(bullets), Engine.get_frames_per_second()]
     pass
 
 func _physics_process(delta: float) -> void:
-    move_bullets_1(delta)
-    move_bullets_2(delta)
-    move_bullets_3(delta)
-    move_bullets_3(delta)
-    move_bullets_3(delta)
-    move_bullets_3(delta)
-    move_bullets(delta) # TODO: Should be in physics_process
+    move_bullets(delta)
     
     # Spawn bullets
     timer -= delta
@@ -82,18 +76,6 @@ func despawn_dumb_bullet(b: Node2D):
     b.hide()
     pool.append(b)
     bullets.erase(b) # probably not very performant
-    
-func move_bullets_1(delta: float):
-    for b in bullets:
-        b.position.y += delta * BULLET_SPEED/4
-    
-func move_bullets_2(delta: float):
-    for b in bullets:
-        b.position.y += delta * BULLET_SPEED/4
-        
-func move_bullets_3(delta: float):
-    for b in bullets:
-        b.position.y += delta * BULLET_SPEED/16
     
 func move_bullets(delta: float):
     for b in bullets:
