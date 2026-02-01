@@ -27,6 +27,7 @@ Number | Conditions | Frame Time (ms)
 12 | dumb bullet with area2d | 140
 13 | circle collider | 177
 14 | multiple moves | 140
+15 | dumb hand-rolled collision | 10
 
 # Test Notes
 
@@ -79,6 +80,7 @@ Incidentally: After removing all the move functions but forgetting the last one 
 Which reminds me, I should make a framerate label.
 
 Test 15: Dumb bullets and dumb collision. Loop through every bullet and check its distance to the player (but use DistanceSquaredTo).
+Result: 10ms, and only 0.74ms is test_collision(). So doing spatial partitioning, quadtrees, etc. isn't strictly necessary.
 
 # TODO
     - how do you break down the Profiler "Process Time"?
