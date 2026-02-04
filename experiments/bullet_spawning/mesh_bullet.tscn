@@ -1,0 +1,16 @@
+[gd_scene load_steps=5 format=3 uid="uid://dpo0bufqbt1qs"]
+
+[ext_resource type="Shader" uid="uid://ddnp7ihmatbpu" path="res://experiments/bullet_spawning/screen_space_bullet.gdshader" id="1_hfmap"]
+[ext_resource type="Texture2D" uid="uid://dlybcbjf5mufc" path="res://21331829601_a5bacb63c4_c.jpg" id="2_a6q27"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2n1i1"]
+shader = ExtResource("1_hfmap")
+shader_parameter/screenspaced_texture = ExtResource("2_a6q27")
+shader_parameter/radius = 10.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_d4c3e"]
+size = Vector2(20, 30)
+
+[node name="MeshBullet" type="MeshInstance2D"]
+material = SubResource("ShaderMaterial_2n1i1")
+mesh = SubResource("QuadMesh_d4c3e")

@@ -1,7 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://clh6bx5jax8tk"]
+[gd_scene load_steps=5 format=3 uid="uid://clh6bx5jax8tk"]
 
 [ext_resource type="Texture2D" uid="uid://cxfhcau2lj8ps" path="res://icon.svg" id="1_bfu4a"]
+[ext_resource type="Shader" uid="uid://ddnp7ihmatbpu" path="res://experiments/bullet_spawning/screen_space_bullet.gdshader" id="1_c8six"]
+[ext_resource type="Texture2D" uid="uid://dlybcbjf5mufc" path="res://21331829601_a5bacb63c4_c.jpg" id="2_llwfr"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kuxps"]
+shader = ExtResource("1_c8six")
+shader_parameter/screenspaced_texture = ExtResource("2_llwfr")
+shader_parameter/radius = 10.0
 
 [node name="Bullet" type="Sprite2D"]
-scale = Vector2(0.254, 0.25)
+material = SubResource("ShaderMaterial_kuxps")
+scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_bfu4a")

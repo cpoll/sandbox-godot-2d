@@ -2,7 +2,8 @@ extends Node2D
 class_name BulletManager
 
 # var bullet = load("res://experiments/bullet_spawning/bullet.tscn")
-var bullet = load("res://experiments/bullet_spawning/dumb_bullet.tscn")
+# var bullet = load("res://experiments/bullet_spawning/dumb_bullet.tscn")
+var bullet = load("res://experiments/bullet_spawning/mesh_bullet.tscn")
 @onready var bulletcount: Label = $'%Ui/%BulletCount'
 @onready var bullet_container = $'%Bullets'
 @onready var player = $'%Player'
@@ -49,18 +50,21 @@ func spawn_bullets() -> void:
         
 func spawn_bullet(bounds: Vector2, pos: Vector2) -> void:
     var b = pool.pop_back()
-    if not b:
+    if not b: # Spawn a bullet
         b = bullet.instantiate()
         bullet_container.add_child(b)
         
         if b is Bullet:
             b.despawn_callback = despawn_bullet
             # b.set_bounds(bounds)
-    else:
+    else: # Use a pool bullet
         if b is Bullet:
             b.process_mode = 0
         b.show()
-        print("depooled bullet")
+        # We move the bullet in the bulletcontainer. We're always rendering bullets in reverse order
+        # of spawning, so the most recently-spawned bullet is on top of all other bullets.
+        bullet_container.move_child(b, bullet_container.get_child_count()-1)
+        
         
     b.position = pos
     bullets.append(b)
@@ -99,6 +103,5 @@ func test_collision():
 
     var player_position: Vector2 = player.position
     for b in bullets:
-        if player_position.distance_to(b.position) < collision_distance:
-        # if player_position.distance_squared_to(b.position) < collision_distance_squared:
+        if player_position.distance_squared_to(b.position) < collision_distance_squared:
             despawn_dumb_bullet(b)

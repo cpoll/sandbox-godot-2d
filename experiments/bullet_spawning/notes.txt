@@ -29,6 +29,9 @@ Number | Conditions | Frame Time (ms)
 14 | multiple moves | 140
 15 | dumb hand-rolled collision | 10
 16 | distance_to instead of distance_to_squared | 10
+17 | shader | 6
+18 | screen space shader | 6
+19 | mesh2d | 6
 
 # Test Notes
 
@@ -86,11 +89,26 @@ Result: 10ms, and only 0.74ms is test_collision(). So doing spatial partitioning
 Test 16: Out of curiosity, how much worse is distance_to than distance_squared_to?
 Result: About the same. Perhaps not surprising. test_collision is a bit worse, 0.8-0.9ms instead of 0.7ms
 
+We're now at the point where Process Time is the main slow thing, at 14ms at times. Visual Profiler is well under 16ms/frame, so I'm not sure what the bottleneck is.
+Insight: The graph spikes when I move the game screen to my secondary monitor. I wonder how many tests this invalidates... If I don't move the screen, the game runs at a pretty constant
+5ms, which seems pretty happy. I might not even need to do any fancy stuff with MultiMesh? We'll see how it looks once I try animated sprites and shaders.
+Is this a refresh rate thing? See: https://docs.godotengine.org/en/stable/tutorials/physics/interpolation/using_physics_interpolation.html
+
+Test 17: Add a shader to the sprite. My Frame time is now 4-6... did I do something weird? Surely it's not faster than it was without a shader.
+
+Test 18: Switched shader to screenspace shader. Still good.
+
+Test 19: Switched the bullet to a QuadMesh MeshInstance2D. Performance is still good. TODO: Is a ColorRect a better choice here,
+or is that weird because it's a Control node? What's the right object for this? I guess it's not common to have a
+shader-only object.
+
+I also took the time to make the bullet round and pretty, and to fix the bullet render order.
+
 # TODO
+    - Animated sprites
+    - Is there some sort of shared-shader thing I need to do? I.e. if 3000 bullets use the same shader, is there an optimization?
+    - Physics interpolation stuff? See post test 16.
     - how do you break down the Profiler "Process Time"?
     - better pooling (I'm sure there's a guide somewhere for the rightTM way to do it)
     - multimesh
-    - Add a bullet count
     - Try out https://godotengine.org/asset-library/asset/1902
-    
-    - ~pooling~

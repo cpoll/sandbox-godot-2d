@@ -17,6 +17,6 @@ func _ready() -> void:
     ##if position.x > bounds.x or position.y > bounds.y:
         ##explode()
 #
-func explode() -> void:
-    # queue_free()
-    despawn_callback.call(self)
+#func explode() -> void:
+    ## queue_free()
+    #despawn_callback.call(self)
