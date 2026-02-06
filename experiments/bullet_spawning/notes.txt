@@ -32,6 +32,7 @@ Number | Conditions | Frame Time (ms)
 17 | shader | 6
 18 | screen space shader | 6
 19 | mesh2d | 6
+20 | smart bullets | 6-8
 
 # Test Notes
 
@@ -104,6 +105,14 @@ shader-only object.
 
 I also took the time to make the bullet round and pretty, and to fix the bullet render order.
 
+Test 20: Can we move the movement and cleanup logic back to the bullet? It would make it a lot easier
+to build patterns. 
+Result: Might be a bit slower. Might be worth it though? It says 2ms on Bullet._process, which isn't bad.
+
+These fluctuating numbers on the Profiler makes it hard to really tell when the difference is 1ms. Is there
+a better way?
+I need to test this on a crappy computer as a confidence test.
+
 # TODO
     - Animated sprites
     - Is there some sort of shared-shader thing I need to do? I.e. if 3000 bullets use the same shader, is there an optimization?
@@ -112,3 +121,7 @@ I also took the time to make the bullet round and pretty, and to fix the bullet 
     - better pooling (I'm sure there's a guide somewhere for the rightTM way to do it)
     - multimesh
     - Try out https://godotengine.org/asset-library/asset/1902
+
+# Ideas
+- Mask the background with ground enemy explosions, so the bg has an undamaged and damaged version. Forest fire
+effect would be cool too, have it spread outwards.

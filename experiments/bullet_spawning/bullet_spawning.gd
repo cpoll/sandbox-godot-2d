@@ -34,7 +34,7 @@ func _process(_delta: float) -> void:
     pass
 
 func _physics_process(delta: float) -> void:
-    move_bullets(delta)
+    # move_bullets(delta)
     
     # Spawn bullets
     timer -= delta
@@ -46,7 +46,26 @@ func _physics_process(delta: float) -> void:
 
 func spawn_bullets() -> void:
     for row in range(ROWS):
-        spawn_bullet(bounds, Vector2(row * row_width + row_width, 0))
+        spawn_smart_bullet(bounds, Vector2(row * row_width + row_width, 0))
+        
+func spawn_smart_bullet(bounds: Vector2, pos: Vector2) -> void:
+    var b = pool.pop_back()
+    if not b: # Spawn a bullet
+        b = bullet.instantiate()
+        bullet_container.add_child(b)
+        
+        b.despawn_callback = despawn_bullet
+        b.set_bounds(bounds)
+    else: # Use a pool bullet
+        b.process_mode = 0
+        b.show()
+        # We move the bullet in the bulletcontainer. We're always rendering bullets in reverse order
+        # of spawning, so the most recently-spawned bullet is on top of all other bullets.
+        bullet_container.move_child(b, bullet_container.get_child_count()-1)
+        
+        
+    b.position = pos
+    bullets.append(b)
         
 func spawn_bullet(bounds: Vector2, pos: Vector2) -> void:
     var b = pool.pop_back()
@@ -59,7 +78,7 @@ func spawn_bullet(bounds: Vector2, pos: Vector2) -> void:
             # b.set_bounds(bounds)
     else: # Use a pool bullet
         if b is Bullet:
-            b.process_mode = 0
+            b.process_mode = Node.PROCESS_MODE_INHERIT
         b.show()
         # We move the bullet in the bulletcontainer. We're always rendering bullets in reverse order
         # of spawning, so the most recently-spawned bullet is on top of all other bullets.
@@ -74,7 +93,7 @@ func despawn_bullet(b: Bullet):
     '''This function is passed to bullets when the pool instantiates them. Bullets will use this
     as a callback when they're ready to re-enter the pool'''
     
-    b.process_mode = 4
+    b.process_mode = Node.PROCESS_MODE_DISABLED
     b.hide()
     pool.append(b)
     bullets.erase(b) # probably not very performant
