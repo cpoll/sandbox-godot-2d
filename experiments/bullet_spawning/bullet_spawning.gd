@@ -3,7 +3,8 @@ class_name BulletManager
 
 # var bullet = load("res://experiments/bullet_spawning/bullet.tscn")
 # var bullet = load("res://experiments/bullet_spawning/dumb_bullet.tscn")
-var bullet = load("res://experiments/bullet_spawning/mesh_bullet.tscn")
+var bullet = load("res://experiments/bullet_spawning/cloud_bullet.tscn");
+# var bullet = load("res://experiments/bullet_spawning/mesh_bullet.tscn")
 @onready var bulletcount: Label = $'%Ui/%BulletCount'
 @onready var bullet_container = $'%Bullets'
 @onready var player = $'%Player'
@@ -34,7 +35,7 @@ func _process(_delta: float) -> void:
     pass
 
 func _physics_process(delta: float) -> void:
-    # move_bullets(delta)
+    move_bullets(delta)
     
     # Spawn bullets
     timer -= delta
@@ -46,16 +47,17 @@ func _physics_process(delta: float) -> void:
 
 func spawn_bullets() -> void:
     for row in range(ROWS):
-        spawn_smart_bullet(bounds, Vector2(row * row_width + row_width, 0))
+        spawn_bullet(bounds, Vector2(row * row_width + row_width, 0))
+        # spawn_smart_bullet(bounds, Vector2(row * row_width + row_width, 0))
         
-func spawn_smart_bullet(bounds: Vector2, pos: Vector2) -> void:
+func spawn_smart_bullet(bounds_: Vector2, pos: Vector2) -> void:
     var b = pool.pop_back()
     if not b: # Spawn a bullet
         b = bullet.instantiate()
         bullet_container.add_child(b)
         
         b.despawn_callback = despawn_bullet
-        b.set_bounds(bounds)
+        b.set_bounds(bounds_)
     else: # Use a pool bullet
         b.process_mode = 0
         b.show()
@@ -67,7 +69,7 @@ func spawn_smart_bullet(bounds: Vector2, pos: Vector2) -> void:
     b.position = pos
     bullets.append(b)
         
-func spawn_bullet(bounds: Vector2, pos: Vector2) -> void:
+func spawn_bullet(_bounds: Vector2, pos: Vector2) -> void:
     var b = pool.pop_back()
     if not b: # Spawn a bullet
         b = bullet.instantiate()

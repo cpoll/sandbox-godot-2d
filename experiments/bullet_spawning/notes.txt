@@ -113,8 +113,19 @@ These fluctuating numbers on the Profiler makes it hard to really tell when the 
 a better way?
 I need to test this on a crappy computer as a confidence test.
 
+I now moved back to dumb bullets. I want sprites, and I think the performance is better with dumb
+bullets. Pushing forward for now, but it'll soon be time for a rewrite.
+
+Just had a great idea for an experimental shmup: You drive a train, i.e. you're on rails, and you can only control your movement on
+one axis. It'd take a lot of design to make that playable, but I've always found it interesting when you can dodge a pattern by moving
+up/down instead of the obvious left/right. I think the rail orientation would change sometimes.
+
 # TODO
-    - Animated sprites
+    - Train shmup
+    - Animated sprites (Spritesheet)
+    - Spinning bullets
+    - Play with some actual bullet spawning. Should we make the spawn anchors objects, or should we track it
+        with the bullet spawner? Can we easily draw debug shapes?
     - Is there some sort of shared-shader thing I need to do? I.e. if 3000 bullets use the same shader, is there an optimization?
     - Physics interpolation stuff? See post test 16.
     - how do you break down the Profiler "Process Time"?
