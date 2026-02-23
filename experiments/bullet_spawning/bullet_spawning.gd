@@ -50,35 +50,33 @@ func _physics_process(delta: float) -> void:
 
 func spawn_bullets() -> void:
     for row in range(ROWS):
-        spawn_bullet(bounds, Vector2(row * row_width + row_width, 0))
-        # spawn_smart_bullet(bounds, Vector2(row * row_width + row_width, 0))
-        
-func spawn_bullet(_bounds: Vector2, pos: Vector2) -> void:
-    var b = pool.pop_back()
-    if not b: # Spawn a bullet
-        b = bullet.instantiate()
-        bullet_container.add_child(b)
-    else: # Use a pool bullet
-        if b is Bullet:
-            b.depool()
-        # We move the bullet in the bulletcontainer. We're always rendering bullets in reverse order
-        # of spawning, so the most recently-spawned bullet is on top of all other bullets.
-        bullet_container.move_child(b, bullet_container.get_child_count()-1)
-        
-    # Set up the parameters specific to these bullets
-    # Later, we move this into separate level logic, triggers, etc.
-    # move function signature: dt, player_pos, returns new_position
-    var movement = func(b, delta):
-        # These two are the same, but the latter can be stateless
-        # b.position.y += delta * 50
-        # b.position = b.initial_position + Vector2(0, 1) * b.lifetime * 50
-        
-        b.position.x = b.initial_position.x + sin(b.lifetime) * 200
-        b.position.y = b.initial_position.y + b.lifetime * 100
+        var pos = Vector2(row * row_width + row_width, 0)
 
-    b.create(movement, pos, 5)
+        var b = pool.pop_back()
+        if not b: # Spawn a bullet
+            b = bullet.instantiate()
+            bullet_container.add_child(b)
+        else: # Use a pool bullet
+            if b is Bullet:
+                b.depool()
+            # We move the bullet in the bulletcontainer. We're always rendering bullets in reverse order
+            # of spawning, so the most recently-spawned bullet is on top of all other bullets.
+            bullet_container.move_child(b, bullet_container.get_child_count()-1)
+            
+        # Set up the parameters specific to these bullets
+        # Later, we move this into separate level logic, triggers, etc.
+        # move function signature: dt, player_pos, returns new_position
+        var movement = func(b, delta):
+            # These two are the same, but the latter can be stateless
+            # b.position.y += delta * 50
+            # b.position = b.initial_position + Vector2(0, 1) * b.lifetime * 50
+            
+            b.position.x = b.initial_position.x + sin(b.lifetime) * 200 * (row % 2 * 2 - 1)
+            b.position.y = b.initial_position.y + b.lifetime * 100
 
-    bullets.append(b)
+        b.create(movement, pos, 5)
+
+        bullets.append(b)
     
 func despawn_bullet(b: Node2D):
     b.enpool()
