@@ -126,8 +126,13 @@ Is there a way around this? Can I batch draw calls somehow? Can I draw to an ima
 Test 22: Did some refactoring into the Bullet class, with the goal of making bullet management easier.
 The performance tanks all at once at the 4000~ bullet mark. A bit of movement, a bit of test_collision.
 Would C# be more performant?
+Doing `b.position.y += delta * BULLET_SPEED/2` instead of `b.move()` is much more performant, but I wonder if the trouble is the calling of the function...
+Inline b.position change: 100fps
+Same as above, but in a function: 30fps
+b.move (callable): 7fps (yuck)
 
 # TODO
+    - Test C# performance
     - Train shmup
     - Animated sprites (Spritesheet)
     - Spinning bullets

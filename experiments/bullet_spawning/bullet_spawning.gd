@@ -53,25 +53,6 @@ func spawn_bullets() -> void:
         spawn_bullet(bounds, Vector2(row * row_width + row_width, 0))
         # spawn_smart_bullet(bounds, Vector2(row * row_width + row_width, 0))
         
-func spawn_smart_bullet(bounds_: Vector2, pos: Vector2) -> void:
-    var b = pool.pop_back()
-    if not b: # Spawn a bullet
-        b = bullet.instantiate()
-        bullet_container.add_child(b)
-        
-        b.despawn_callback = despawn_bullet
-        b.set_bounds(bounds_)
-    else: # Use a pool bullet
-        b.process_mode = 0
-        b.show()
-        # We move the bullet in the bulletcontainer. We're always rendering bullets in reverse order
-        # of spawning, so the most recently-spawned bullet is on top of all other bullets.
-        bullet_container.move_child(b, bullet_container.get_child_count()-1)
-        
-        
-    b.position = pos
-    bullets.append(b)
-        
 func spawn_bullet(_bounds: Vector2, pos: Vector2) -> void:
     var b = pool.pop_back()
     if not b: # Spawn a bullet
@@ -87,8 +68,10 @@ func spawn_bullet(_bounds: Vector2, pos: Vector2) -> void:
     # Set up the parameters specific to these bullets
     # Later, we move this into separate level logic, triggers, etc.
     # move function signature: dt, player_pos, returns new_position
-    var movement = func(delta):
-        b.position.y += delta * 50
+    var movement = func(b, delta):
+        # These two are the same, but the latter can be stateless
+        # b.position.y += delta * 50
+        b.position = b.initial_position + Vector2(0, 1) * b.lifetime * 50
     b.create(movement, pos, 5)
 
     bullets.append(b)
@@ -101,8 +84,8 @@ func despawn_bullet(b: Node2D):
 func move_bullets(delta: float):
     for b in bullets:
         
-        #b.position.y += delta * BULLET_SPEED
-        b.move(delta)
+        #b.position.y += delta * BULLET_SPEED/2
+        b.move(b, delta)
         
         # TODO: Some bullets may want to disable bounds checking to flitter on-and-off screen
         if b.position.x > bounds.x or b.position.y > bounds.y:

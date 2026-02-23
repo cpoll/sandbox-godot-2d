@@ -4,14 +4,16 @@ extends Sprite2D
 var movement: Callable
 var radius_pixels: int
 var lifetime: float
+var initial_position: Vector2
 
-func move(delta):
-    movement.call(delta)
+func move(b, delta):
+    movement.call(b, delta)
     lifetime += delta
 
-func create(_movement: Callable, initial_position: Vector2, _radius_pixels: int):
+func create(_movement: Callable, _initial_position: Vector2, _radius_pixels: int):
     movement = _movement
-    position = initial_position
+    position = _initial_position
+    initial_position = _initial_position
     radius_pixels = _radius_pixels
     lifetime = 0
 
