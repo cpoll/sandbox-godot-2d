@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://cavg78d66hva0"]
+[gd_scene load_steps=6 format=3 uid="uid://cavg78d66hva0"]
 
 [ext_resource type="Script" uid="uid://bglaiuoee1tky" path="res://experiments/bullet_spawning/bullet_spawning.gd" id="1_o6i6w"]
 [ext_resource type="Texture2D" uid="uid://cxfhcau2lj8ps" path="res://icon.svg" id="2_hqafc"]
 [ext_resource type="Script" uid="uid://dge72nnil0ybe" path="res://experiments/bullet_spawning/player.gd" id="3_ru858"]
 [ext_resource type="PackedScene" uid="uid://b2jwou5n2nuqg" path="res://experiments/bullet_spawning/ui.tscn" id="4_hqafc"]
+[ext_resource type="Script" uid="uid://06l1v36v0r4t" path="res://experiments/bullet_spawning/hitboxes.gd" id="5_ru858"]
 
 [node name="BulletSpawning" type="Node2D"]
 script = ExtResource("1_o6i6w")
@@ -31,3 +32,4 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+script = ExtResource("5_ru858")

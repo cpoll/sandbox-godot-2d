@@ -1,10 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://bwgsjfemswofq"]
+[gd_scene load_steps=4 format=3 uid="uid://bwgsjfemswofq"]
 
 [ext_resource type="Texture2D" uid="uid://bgcrbdsru0kc6" path="res://experiments/bullet_spawning/sprites/cloud_bg.png" id="1_v3r81"]
+[ext_resource type="Script" uid="uid://bvibvnt337k1s" path="res://experiments/bullet_spawning/bullet.gd" id="2_00f4t"]
 [ext_resource type="Texture2D" uid="uid://dt3yapktjplpr" path="res://experiments/bullet_spawning/sprites/cloud_fg.png" id="2_qpefb"]
 
 [node name="Background" type="Sprite2D"]
 texture = ExtResource("1_v3r81")
+script = ExtResource("2_00f4t")
 
 [node name="Top" type="Sprite2D" parent="."]
 z_index = 1

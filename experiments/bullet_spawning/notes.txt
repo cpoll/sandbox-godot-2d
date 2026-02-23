@@ -120,6 +120,13 @@ Just had a great idea for an experimental shmup: You drive a train, i.e. you're 
 one axis. It'd take a lot of design to make that playable, but I've always found it interesting when you can dodge a pattern by moving
 up/down instead of the obvious left/right. I think the rail orientation would change sometimes.
 
+Test 21: Added hitboxes.gd to draw debug hitboxes. Unfortunately this tanks performance, from a stable 200fps down to 18fps.
+Is there a way around this? Can I batch draw calls somehow? Can I draw to an image in memory, and then draw the image to the screen just once?
+
+Test 22: Did some refactoring into the Bullet class, with the goal of making bullet management easier.
+The performance tanks all at once at the 4000~ bullet mark. A bit of movement, a bit of test_collision.
+Would C# be more performant?
+
 # TODO
     - Train shmup
     - Animated sprites (Spritesheet)

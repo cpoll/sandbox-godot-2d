@@ -1,21 +1,24 @@
-extends MeshInstance2D
 class_name Bullet
+extends Sprite2D
 
-const SPEED = 100
-var bounds: Vector2
-var despawn_callback: Callable
+var movement: Callable
+var radius_pixels: int
+var lifetime: float
 
-func _ready() -> void:
-    pass # Replace with function body.
+func move(delta):
+    movement.call(delta)
+    lifetime += delta
 
-func set_bounds(_bounds: Vector2):
-    bounds = _bounds
+func create(_movement: Callable, initial_position: Vector2, _radius_pixels: int):
+    movement = _movement
+    position = initial_position
+    radius_pixels = _radius_pixels
+    lifetime = 0
 
-func _physics_process(delta: float) -> void:
-    position.y += delta * SPEED
-    if position.x > bounds.x or position.y > bounds.y:
-        explode()
-
-func explode() -> void:
-    # queue_free()
-    despawn_callback.call(self)
+func enpool():
+    self.process_mode = Node.PROCESS_MODE_DISABLED
+    self.hide()
+    
+func depool():
+    self.process_mode = Node.PROCESS_MODE_INHERIT
+    self.show()
