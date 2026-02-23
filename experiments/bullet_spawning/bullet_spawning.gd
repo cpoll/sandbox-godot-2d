@@ -71,7 +71,11 @@ func spawn_bullet(_bounds: Vector2, pos: Vector2) -> void:
     var movement = func(b, delta):
         # These two are the same, but the latter can be stateless
         # b.position.y += delta * 50
-        b.position = b.initial_position + Vector2(0, 1) * b.lifetime * 50
+        # b.position = b.initial_position + Vector2(0, 1) * b.lifetime * 50
+        
+        b.position.x = b.initial_position.x + sin(b.lifetime) * 200
+        b.position.y = b.initial_position.y + b.lifetime * 100
+
     b.create(movement, pos, 5)
 
     bullets.append(b)
