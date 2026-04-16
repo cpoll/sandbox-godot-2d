@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://epluwqd68lot"]
+[gd_scene load_steps=7 format=3 uid="uid://epluwqd68lot"]
 
 [ext_resource type="Script" uid="uid://cnmi7mgscj1gi" path="res://experiments/text_effects/rich_text_ghost.gd" id="1_n3tky"]
 [ext_resource type="Script" uid="uid://dff2aps270lhv" path="res://experiments/text_effects/rich_text_matrix.gd" id="2_honnj"]
+[ext_resource type="Script" uid="uid://djlvlh73sslj3" path="res://experiments/text_effects/rich_text_a_example.gd" id="3_ri8fh"]
 
 [sub_resource type="RichTextEffect" id="RichTextEffect_honnj"]
 script = ExtResource("1_n3tky")
@@ -10,6 +11,10 @@ metadata/_custom_type_script = "uid://cnmi7mgscj1gi"
 [sub_resource type="RichTextEffect" id="RichTextEffect_ri8fh"]
 script = ExtResource("2_honnj")
 metadata/_custom_type_script = "uid://dff2aps270lhv"
+
+[sub_resource type="RichTextEffect" id="RichTextEffect_kuyfh"]
+script = ExtResource("3_ri8fh")
+metadata/_custom_type_script = "uid://djlvlh73sslj3"
 
 [node name="TextEffects" type="Control"]
 layout_mode = 3
@@ -46,6 +51,10 @@ text = "[b]Built-in:[/b]
 [wave freq=7.0 amp=50.0]Wavewavewavewave[/wave]
 
 [b]Custom:[/b]
+
+Example:
+[example]ABCDEFGHIJKLMNOPQRSTUVWXYZ[/example]
+
 [ghost freq=5.0 span=10.0]Ghost[/ghost]
 [matrix clean=2.0 dirty=1.0 span=50]There is no spoon.[/matrix]"
-custom_effects = [SubResource("RichTextEffect_honnj"), SubResource("RichTextEffect_ri8fh")]
+custom_effects = [SubResource("RichTextEffect_honnj"), SubResource("RichTextEffect_ri8fh"), SubResource("RichTextEffect_kuyfh")]
