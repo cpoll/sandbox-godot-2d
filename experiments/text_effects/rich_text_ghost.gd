@@ -1,0 +1,19 @@
+@tool # Optional; runs it in the editor
+extends RichTextEffect
+
+class_name RichTextGhost
+# From https://docs.godotengine.org/en/stable/tutorials/ui/bbcode_in_richtextlabel.html#custom-bbcode-tags-and-text-effects
+# Syntax: [ghost freq=5.0 span=10.0][/ghost]
+# Text effects are added in RichTextLabel -> Markup -> Custom Effects
+
+# Define the tag name.
+var bbcode = "ghost"
+
+func _process_custom_fx(char_fx):
+    # Get parameters, or use the provided default value if missing.
+    var speed = char_fx.env.get("freq", 5.0)
+    var span = char_fx.env.get("span", 10.0)
+
+    var alpha = sin(char_fx.elapsed_time * speed + (char_fx.range.x / span)) * 0.5 + 0.5
+    char_fx.color.a = alpha
+    return true

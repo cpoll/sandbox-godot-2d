@@ -1,0 +1,51 @@
+[gd_scene load_steps=5 format=3 uid="uid://epluwqd68lot"]
+
+[ext_resource type="Script" uid="uid://cnmi7mgscj1gi" path="res://experiments/text_effects/rich_text_ghost.gd" id="1_n3tky"]
+[ext_resource type="Script" uid="uid://dff2aps270lhv" path="res://experiments/text_effects/rich_text_matrix.gd" id="2_honnj"]
+
+[sub_resource type="RichTextEffect" id="RichTextEffect_honnj"]
+script = ExtResource("1_n3tky")
+metadata/_custom_type_script = "uid://cnmi7mgscj1gi"
+
+[sub_resource type="RichTextEffect" id="RichTextEffect_ri8fh"]
+script = ExtResource("2_honnj")
+metadata/_custom_type_script = "uid://dff2aps270lhv"
+
+[node name="TextEffects" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.255659, 0.255659, 0.255659, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ColorRect/MarginContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[b]Built-in:[/b]
+[wave freq=7.0 amp=50.0]Wavewavewavewave[/wave]
+
+[b]Custom:[/b]
+[ghost freq=5.0 span=10.0]Ghost[/ghost]
+[matrix clean=2.0 dirty=1.0 span=50]There is no spoon.[/matrix]"
+custom_effects = [SubResource("RichTextEffect_honnj"), SubResource("RichTextEffect_ri8fh")]
