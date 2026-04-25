@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://dskoscus3m47u"]
+
+[ext_resource type="Texture2D" uid="uid://cxfhcau2lj8ps" path="res://icon.svg" id="1_jmk25"]
+[ext_resource type="Script" uid="uid://b47474oisy285" path="res://experiments/top_down_character/top_down_character.gd" id="1_yfr6t"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yfr6t"]
+radius = 44.3847
+
+[node name="TopDownCharacter" type="CharacterBody2D"]
+script = ExtResource("1_yfr6t")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_yfr6t")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_jmk25")

@@ -1,0 +1,36 @@
+[gd_scene load_steps=4 format=3 uid="uid://b8qjkgg7w42wg"]
+
+[ext_resource type="Texture2D" uid="uid://bx3ur77l1bnam" path="res://experiments/mask_effect/circle_mask.png" id="1_osjud"]
+[ext_resource type="Shader" uid="uid://cv86503neik5f" path="res://experiments/mask_effect/mask_effect.gdshader" id="1_stgmc"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vvqd6"]
+shader = ExtResource("1_stgmc")
+
+[node name="MaskEffect" type="Node2D"]
+
+[node name="Underneath" type="ColorRect" parent="."]
+offset_right = 1147.0
+offset_bottom = 651.0
+color = Color(0.620373, 0.57055, 0.175776, 1)
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="."]
+rect = Rect2(0, 0, 500, 500)
+
+[node name="Cover" type="ColorRect" parent="."]
+offset_left = 39.0
+offset_top = 31.0
+offset_right = 1102.0
+offset_bottom = 618.0
+color = Color(0.187176, 0.187176, 0.187176, 1)
+
+[node name="Mask" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_vvqd6")
+position = Vector2(235, 178)
+scale = Vector2(10, 10)
+texture = ExtResource("1_osjud")
+
+[node name="Mask2" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_vvqd6")
+position = Vector2(495, 344)
+scale = Vector2(10, 10)
+texture = ExtResource("1_osjud")
